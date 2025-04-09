@@ -1,0 +1,56 @@
+{% comment %} 
+    Questions I would have for the designer in this section:
+    what is the intended interaction of this section, ie: will it be a one off announcmenet, do we need to enable to have multiple as slider. If we're going to go the slider route, then I would have announcments at the block level and use a slideshow library, hopeful one already used within the theme to handle switching through the announcment blocks and add in settings that would allow client to enable auto carousel rotating along with the interval between slides.
+
+    I've taken an MVP approach with this section in order to complete the challenge and have it matching the figma that was handed to me as closely as possible. 
+{% endcomment %}
+
+{{ 'section-announcment-bar.css' | asset_url | stylesheet_tag }}
+
+{% if section.settings.text != blank %}
+    <div class="color-{{ section.settings.color_scheme }} announcment-bar--wrap">
+        <div class="anncouncement-bar--block">
+            {% if section.settings.link != blank %}
+                <a href="{{ section.settings.link }}" title="block.settings.text" aria-label="announcment">
+            {% endif %}
+                {% if section.settings.text != blank %}
+                    <p class=>{{ section.settings.text }}</p>
+                {% endif %}
+            {% if section.settings.link != blank %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endif %}
+{% schema %}
+    {
+        "name": "Announcement Bar",
+        "class": "anncouncement-bar-section",
+        "settings": [
+            {
+                "type": "text",
+                "id": "text",
+                "default": "Default announcement here",
+                "label": "t:sections.all.colors.text"
+            },
+            {
+                "type": "url",
+                "id": "link",
+                "label": "t:sections.all.colors.link"
+            },
+            {
+                "type": "color_scheme",
+                "id": "color_scheme",
+                "label": "t:sections.all.colors.label",
+                "default": "scheme-1"
+            }
+        ],
+       
+        "presets": [
+            {
+                "name": "Announcement bar",
+                
+            }
+        ]
+    }
+{% endschema %}

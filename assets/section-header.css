@@ -1,0 +1,118 @@
+.section-header header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-header header .header--left,
+.section-header header .header--right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.section-header header .header--left .logo {
+    margin-right: 11.4rem;
+}
+
+.section-header header .header--left nav {
+    margin-left: 0;
+}
+
+.section-header header .header--left nav ul {
+    display: inline-flex;
+    list-style: none;
+    text-transform: uppercase;
+    padding: 0;
+    margin: 0;
+    gap: 4.8rem;
+
+}
+
+.section-header header .header--left nav ul>li {
+    text-align: center;
+    font-family: Roboto;
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.125rem;
+}
+
+.section-header header .header--left nav ul li:last-of-type a {
+    color: #FF2500;
+    font-weight: 700;
+}
+
+.section-header header .header--right {
+    gap: 4.1rem;
+}
+
+.section-header header .header--right form input[type="search"] {
+    width: 100%;
+    max-width: 19.3rem;
+    border-radius: 5rem;
+    border: 1px solid #C4C4C4;
+    background: #FFF;
+}
+
+.section-header header .header--right form input[type="search"]::placeholder {
+    color: #A3A3A3;
+    font-family: Roboto;
+    font-size: 1.3rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.section-header header .header--right .search__button {
+    align-items: center;
+    background-color: transparent;
+    border: 0;
+    color: currentColor;
+    cursor: pointer;
+    display: flex;
+    height: 4.4rem;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    right: 1.9rem;
+    top: 0;
+}
+
+.section-header header .header--right .header--login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.section-header header .header--right .header--login .h5 {
+    font-size: 1.4rem;
+    color: #4A4A4A;
+    padding: 0;
+    margin: 0;
+}
+
+.section-header header .header--right .header--login .login--links {
+    width: max-content;
+    display: block;
+    font-size: 1.2rem;
+    color: #4A4A4A;
+}
+
+.section-header header .header--right .header--login .login--links a {
+    color: #4A4A4A;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-skip-ink: none;
+    text-decoration-thickness: auto;
+    text-underline-offset: auto;
+    text-underline-position: from-font;
+}

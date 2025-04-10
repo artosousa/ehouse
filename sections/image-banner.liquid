@@ -1,0 +1,196 @@
+{{ 'section-image-banner.css' | asset_url | stylesheet_tag }}
+{%- liquid 
+    assign enable_full = section.settings.enable_full
+    assign m_top_p = section.settings.m_top_padding
+    assign m_bot_p = section.settings.m_bottom_padding
+    assign d_top_p = section.settings.d_top_padding
+    assign d_bot_p = section.settings.d_bottom_padding  
+    assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+-%}
+
+{% style %}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ m_top_p | divided_by: 10 }}rem;
+    padding-bottom: {{ m_bot_p | divided_by: 10 }}rem;
+
+    @media screen and (min-width:990px){
+        padding-top: {{ d_top_p | divided_by: 10 }}rem;
+        padding-bottom: {{ d_bot_p | divided_by: 10 }}rem;
+    }
+  }
+  
+{% endstyle %}
+<div class="image-banner--wrap {% if enable_full %}full-width {% else %} page-width-desktop {% endif %}">
+    {% for block in section.blocks %}
+        {% style %}
+            .image-banner--wrap{
+                height: auto;
+            }
+            @media screen and (min-width:990px){
+                .image-banner--wrap{
+                    height: {{ block.settings.d_img.width | divided_by: block.settings.d_img.aspect_ratio | divided_by: 10}}rem;
+                }
+            }
+        {% endstyle %}
+        <div class="image-banner--item">
+            <div class="item-bg full-width">
+                {%- liquid 
+                    assign m_image_height = block.settings.m_img.width | divided_by: block.settings.m_img.aspect_ratio    
+                    assign d_image_height = block.settings.d_img.width | divided_by: block.settings.d_img.aspect_ratio
+                    assign menu_handle = block.settings.menu
+                    assign menu = linklists[menu_handle]
+                -%}
+                {% if block.settings.m_img != blank %}
+                    {{ 
+                        block.settings.m_img 
+                        | image_url: width: 750
+                        | image_tag: 
+                            width: block.settings.m_img.width,
+                            height: m_image_height,
+                            class: "m_img",
+                            widths: widths,
+                            loading: "lazy",
+                            alt: "slider img"
+                    }}
+                {% endif %}
+                {% if block.settings.d_img != blank %}
+                    {{ 
+                        block.settings.d_img 
+                        | image_url: width: 1920
+                        | image_tag: 
+                            width: block.settings.d_img.width,
+                            height: d_image_height,
+                            class: "d_img",
+                            widths: widths,
+                            loading: "lazy",
+                            alt: "slider img"
+                    }}
+                {% endif %}
+            </div>
+            <div class="item-content">
+                {% if block.settings.sub_text != blank %}
+                    <h3>{{ block.settings.sub_text }}</h3>
+                {% endif %}
+                {% if block.settings.title != blank %}
+                    <h2>{{ block.settings.title }}</h2>
+                {% endif %}
+            
+                {% if menu.links.size > 0 %}
+                    <ul class="content-links">
+                        {% for link in menu.links %}
+                            <li class="link--item ">
+                                <a class="button" href="{{ link.url }}" title="{{ link.title }}">
+                                    {{ link.title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% schema %}
+    {
+        "name":  "t:sections.image-banner.settings.section_title.label",
+        "class": "image-banner-section",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "header",
+                "content": "t:sections.image-banner.settings.section_settings.label"
+            },
+            {
+                "type": "checkbox",
+                "default": true,
+                "id": "enable_full",
+                "label": "Enable full width"
+            },
+            {
+                "type": "header",
+                "content": "t:sections.image-banner.settings.padding_header.label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_top_padding",
+                "label": "t:sections.image-banner.settings.padding.m_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_bottom_padding",
+                "label": "t:sections.image-banner.settings.padding.m_b_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_top_padding",
+                "label": "t:sections.image-banner.settings.padding.d_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_bottom_padding",
+                "label": "t:sections.image-banner.settings.padding.d_b_label"
+            },
+        ],
+        "blocks": [
+            {
+                "type": "slide",
+                "name": "t:sections.image-banner.settings.item_title.label",
+                "settings": [
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "t:sections.image-banner.settings.title_header.label"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sub_text",
+                        "label": "t:sections.image-banner.settings.subtitle_header.label"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "m_img",
+                        "label": "t:sections.image-banner.settings.image_labels.mobile"
+                    },
+                    {
+                        "type": "image_picker",
+                        "id": "d_img",
+                        "label": "t:sections.image-banner.settings.image_labels.desktop"
+                    },
+                    {
+                        "type": "link_list",
+                        "id": "menu",
+                        "label": "t:sections.image-banner.settings.menu.label",
+                        "info": "t:sections.image-banner.settings.menu.info"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "t:sections.image-banner.settings.section_title.label",
+                "category": "Image"
+            }
+        ]
+    }
+{% endschema %}

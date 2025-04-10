@@ -1,0 +1,136 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image_banner": {
+      "type": "image-banner",
+      "blocks": {
+        "slide_JHigcH": {
+          "type": "slide",
+          "settings": {
+            "title": "50% OFF EVERYTHING",
+            "sub_text": "IN STORES & ONLINE",
+            "m_img": "shopify://shop_images/hero_imagemobile.png",
+            "d_img": "shopify://shop_images/hero-imagedesktop.png",
+            "menu": "section-menu"
+          }
+        }
+      },
+      "block_order": [
+        "slide_JHigcH"
+      ],
+      "settings": {
+        "enable_full": true,
+        "m_top_padding": 0,
+        "m_bottom_padding": 0,
+        "d_top_padding": 0,
+        "d_bottom_padding": 10
+      }
+    },
+    "image_with_text_cWrLGw": {
+      "type": "image-with-text",
+      "settings": {
+        "enable_full": true,
+        "header": "Vacay This Way",
+        "sub_header": "Everything you need for your summer get away!",
+        "hero_img": "shopify://shop_images/img-w-text.png",
+        "btn_label": "SHOP SUMMER ESSENTIALS",
+        "btn_url": "#",
+        "m_top_padding": 100,
+        "m_bottom_padding": 10,
+        "d_top_padding": 60,
+        "d_bottom_padding": 60
+      }
+    },
+    "split_image_tjedfa": {
+      "type": "split-image",
+      "blocks": {
+        "image_block_GYggPQ": {
+          "type": "image-block",
+          "settings": {
+            "image": "shopify://shop_images/new-arrivals-imagesplit.png",
+            "title": "NEW ARRIVALS",
+            "sub_header": "Our latest Summer styles. Fresh. Fun. Fabulous.",
+            "link_list": "section-menu",
+            "single_link_label": "",
+            "single_link_url": ""
+          }
+        },
+        "image_block_PGXB3L": {
+          "type": "image-block",
+          "settings": {
+            "image": "shopify://shop_images/dorm-imagesplit.png",
+            "title": "COLLEGE BOUND",
+            "sub_header": "New places and new faces.Same great style.",
+            "link_list": "",
+            "single_link_label": "SHOP DORM DECOR",
+            "single_link_url": "#"
+          }
+        }
+      },
+      "block_order": [
+        "image_block_GYggPQ",
+        "image_block_PGXB3L"
+      ],
+      "settings": {
+        "enable_full": true,
+        "m_top_padding": 10,
+        "m_bottom_padding": 10,
+        "d_top_padding": 0,
+        "d_bottom_padding": 40
+      }
+    },
+    "icon_with_text_wMJ8Jf": {
+      "type": "icon-with-text",
+      "blocks": {
+        "icon_with_image_AiWEdY": {
+          "type": "icon-with-image",
+          "settings": {
+            "image": "shopify://shop_images/shipping-icon.svg",
+            "icon-text": "FREE SHIPPING ON ALL ORDERS"
+          }
+        },
+        "icon_with_image_MiYgUn": {
+          "type": "icon-with-image",
+          "settings": {
+            "image": "shopify://shop_images/returns-icon.svg",
+            "icon-text": "free returns on all orders"
+          }
+        },
+        "icon_with_image_Q8gGpX": {
+          "type": "icon-with-image",
+          "settings": {
+            "image": "shopify://shop_images/checkout-icon.svg",
+            "icon-text": "SAFE & SECURE CHECKOUT"
+          }
+        }
+      },
+      "block_order": [
+        "icon_with_image_AiWEdY",
+        "icon_with_image_MiYgUn",
+        "icon_with_image_Q8gGpX"
+      ],
+      "settings": {
+        "enable_full": true,
+        "bg_color": "#fafbfb",
+        "m_top_padding": 40,
+        "m_bottom_padding": 40,
+        "d_top_padding": 60,
+        "d_bottom_padding": 60
+      }
+    }
+  },
+  "order": [
+    "image_banner",
+    "image_with_text_cWrLGw",
+    "split_image_tjedfa",
+    "icon_with_text_wMJ8Jf"
+  ]
+}

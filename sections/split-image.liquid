@@ -1,0 +1,191 @@
+{{ 'section-split-image.css' | asset_url | stylesheet_tag }}
+
+{%- liquid 
+    assign enable_full = section.settings.enable_full
+    assign m_top_p = section.settings.m_top_padding
+    assign m_bot_p = section.settings.m_bottom_padding
+    assign d_top_p = section.settings.d_top_padding
+    assign d_bot_p = section.settings.d_bottom_padding  
+    assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+-%}
+{% style %}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ m_top_p | divided_by: 10 }}rem;
+    padding-bottom: {{ m_bot_p | divided_by: 10 }}rem;
+
+    @media screen and (min-width:990px){
+        padding-top: {{ d_top_p | divided_by: 10 }}rem;
+        padding-bottom: {{ d_bot_p | divided_by: 10 }}rem;
+    }
+  }
+  
+{% endstyle %}
+<div class="split-image--wrap {% if enable_full %}full-width {% else %} page-width-desktop {% endif %}">
+    {% if section.blocks.size > 0 %}
+        {% for block in section.blocks %}
+            <div class="split-image--item">
+                {% if block.settings.image != blank %}
+                    <div class="item-img">
+                        {%- liquid 
+                            assign image_height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio
+                            assign menu_handle = block.settings.link_list
+                            assign menu = linklists[menu_handle]
+                        -%}
+                        {{ 
+                            block.settings.image 
+                            | image_url: width: 750
+                            | image_tag: 
+                                width: section.settings.image.width,
+                                height: image_height,
+                                class: "block-hero",
+                                widths: widths,
+                                loading: "lazy",
+                                alt: "hero img"
+                        }}
+                    </div>
+                    <div class="item-content">
+                        {% if block.settings.title != blank %}
+                            <h2>{{ block.settings.title }}</h2>
+                        {% endif %}
+
+                        {% if block.settings.sub_header != blank %}
+                            <h3>{{ block.settings.sub_header }}</h3>
+                        {% endif %}
+
+                        {% if menu.links.size > 0 %}
+                            <ul class="content-links">
+                                {% for link in menu.links %}
+                                    <li class="link--item ">
+                                        <a href="{{ link.url }}" title="{{ link.title }}">
+                                            {{- link.title -}}
+                                        </a>
+                                        
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                        {% if menu.links.size == 0 and block.settings.single_link_label != blank %}
+                            <a href="{{ block.settings.single_link_url }}" title="{{ block.settings.single_link_label }}">
+                                {{ block.settings.single_link_label }}
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endif %} 
+</div>
+
+{% schema %}
+    {
+        "name":  "t:sections.split-image.name",
+        "class": "split-image-section",
+        "tag": "section",
+        "max_blocks": 2,
+        "settings": [
+            {
+                "type": "header",
+                "content": "t:sections.split-image.settings.title"
+            },
+            {
+                "type": "checkbox",
+                "default": true,
+                "id": "enable_full",
+                "label": "t:sections.split-image.settings.enable_full"
+            },
+            
+            {
+                "type": "header",
+                "content": "t:sections.split-image.settings.padding_header"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_top_padding",
+                "label": "t:sections.split-image.settings.m_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_bottom_padding",
+                "label": "t:sections.split-image.settings.m_b_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_top_padding",
+                "label": "t:sections.split-image.settings.d_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_bottom_padding",
+                "label": "t:sections.split-image.settings.d_b_label"
+            },
+        ],
+        "blocks": [
+            {
+                "type": "image-block",
+                "name": "t:sections.split-image.blocks.label",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "t:sections.split-image.blocks.bg_img"
+                    },
+                    {
+                        "type": "text",
+                        "id": "title",
+                        "label": "t:sections.split-image.blocks.title"
+                    },
+                    {
+                        "type": "text",
+                        "id": "sub_header",
+                        "label": "t:sections.split-image.blocks.sub_title"
+                    },
+                    {
+                        "type": "link_list",
+                        "id": "link_list",
+                        "label": "t:sections.split-image.blocks.link_list"
+                    },
+                    {
+                        "type": "text",
+                        "id": "single_link_label",
+                        "label": "t:sections.split-image.blocks.single_link.settings.label",
+                        "info": "t:sections.split-image.blocks.single_link.settings.info"
+                    },
+                    {
+                        "type": "url",
+                        "id": "single_link_url",
+                        "label": "t:sections.split-image.blocks.single_link.settings.url",
+                        "info": "t:sections.split-image.blocks.single_link.settings.info"
+                    },
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "t:sections.split-image.name",
+                "category": "Image",
+                
+            }
+        ]
+    }
+{% endschema %}

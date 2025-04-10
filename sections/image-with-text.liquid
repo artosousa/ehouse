@@ -1,0 +1,154 @@
+{{ 'section-image-with-text.css' | asset_url | stylesheet_tag }}
+{%- liquid 
+    assign enable_full = section.settings.enable_full
+    assign m_top_p = section.settings.m_top_padding
+    assign m_bot_p = section.settings.m_bottom_padding
+    assign d_top_p = section.settings.d_top_padding
+    assign d_bot_p = section.settings.d_bottom_padding  
+    assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+-%}
+{% style %}
+  #shopify-section-{{ section.id }}{
+    padding-top: {{ m_top_p | divided_by: 10 }}rem;
+    padding-bottom: {{ m_bot_p | divided_by: 10 }}rem;
+
+    @media screen and (min-width:990px){
+        padding-top: {{ d_top_p | divided_by: 10 }}rem;
+        padding-bottom: {{ d_bot_p | divided_by: 10 }}rem;
+    }
+  }
+  
+{% endstyle %}
+
+<div class="image-with-text--wrap {% if enable_full %}full-width {% else %} page-width-desktop {% endif %}">
+    <div class="image-with-text--content">
+        <div class="content--inner">
+            {% if section.settings.header != blank %}
+                <h2>{{ section.settings.header }}</h2>
+            {% endif %}
+            {% if section.settings.sub_header != blank %}
+                <h3>{{ section.settings.sub_header }}</h3>
+            {% endif %}
+            {% if section.settings.btn_label != blank %}
+                <a class="button " href="{{ section.settings.btn_url }}" title="{{ section.settings.btn_label }}">
+                    {{ section.settings.btn_label }}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    {%  if section.settings.hero_img != blank %}
+         <div class="image-with-text--hero">
+            {%- liquid 
+                assign image_height = section.settings.hero_img.width | divided_by: section.settings.hero_img.aspect_ratio    
+            -%}
+            {{ 
+                section.settings.hero_img 
+                | image_url: width: 750
+                | image_tag: 
+                    width: section.settings.hero_img.width,
+                    height: image_height,
+                    class: "hero_img",
+                    widths: widths,
+                    loading: "lazy",
+                    alt: "hero img"
+            }}
+        
+        </div>
+    {% endif %}
+</div>
+{% schema %}
+    {
+        "name":  "t:sections.image-with-text.name",
+        "class": "image-with-text-section",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "header",
+                "content": "t:sections.image-with-text.settings.title"
+            },
+            {
+                "type": "checkbox",
+                "default": true,
+                "id": "enable_full",
+                "label": "t:sections.image-with-text.settings.enable_full"
+            },
+            {
+                "type": "text",
+                "id": "header",
+                "label": "t:sections.image-with-text.settings.header"
+            },
+            {
+                "type": "text",
+                "id": "sub_header",
+                "label": "t:sections.image-with-text.settings.subheader"
+            },
+            {
+                "type": "image_picker",
+                "id": "hero_img",
+                "label": "t:sections.image-banner.settings.image_labels.mobile"
+            },
+            
+            {
+                "type": "text",
+                "id": "btn_label",
+                "label": "t:sections.image-with-text.settings.btn_label"
+            },
+            {
+                "type": "url",
+                "id": "btn_url",
+                "label": "t:sections.image-with-text.settings.btn_url"
+            },
+            {
+                "type": "header",
+                "content": "t:sections.image-with-text.settings.padding_header"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_top_padding",
+                "label": "t:sections.image-with-text.settings.m_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_bottom_padding",
+                "label": "t:sections.image-with-text.settings.m_b_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_top_padding",
+                "label": "t:sections.image-with-text.settings.d_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_bottom_padding",
+                "label": "t:sections.image-with-text.settings.d_b_label"
+            },
+        ],
+        
+        "presets": [
+            {
+                "name": "t:sections.image-with-text.name",
+                "category": "Image"
+            }
+        ]
+    }
+{% endschema %}

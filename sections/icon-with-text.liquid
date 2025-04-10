@@ -1,0 +1,141 @@
+{{ 'section-icon-with-text.css' | asset_url | stylesheet_tag }}
+{%- liquid 
+    assign enable_full = section.settings.enable_full
+    assign m_top_p = section.settings.m_top_padding
+    assign m_bot_p = section.settings.m_bottom_padding
+    assign d_top_p = section.settings.d_top_padding
+    assign d_bot_p = section.settings.d_bottom_padding  
+-%}
+{% style %}
+  #shopify-section-{{ section.id }}{
+    background-color: {{ section.settings.bg_color }};
+    padding-top: {{ m_top_p | divided_by: 10 }}rem;
+    padding-bottom: {{ m_bot_p | divided_by: 10 }}rem;
+
+    @media screen and (min-width:990px){
+        padding-top: {{ d_top_p | divided_by: 10 }}rem;
+        padding-bottom: {{ d_bot_p | divided_by: 10 }}rem;
+    }
+  }
+  
+{% endstyle %}
+<div class="icon-with-text--wrap {% if enable_full %}full-width {% else %} page-width-desktop {% endif %}">
+    <ul class=icon-with-text--list>
+        {% if section.blocks.size != 0 %}
+            {% for block in section.blocks %}
+                <li class="icon-item">
+                    {% if block.settings.image != blank %}
+                        {%- liquid 
+                            assign image_height = block.settings.image.width | divided_by: block.settings.image.aspect_ratio
+                        -%}
+                        {{ 
+                            block.settings.image 
+                            | image_url: width: 750
+                            | image_tag: 
+                                width: section.settings.image.width,
+                                height: image_height,
+                                class: "icon",
+                                loading: "lazy",
+                                alt: "icon"
+                        }}
+                    {% endif %}
+                    {% if block.settings.icon-text != blank %}
+                        <h3>{{ block.settings.icon-text }}</h3>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        {% endif %}    
+    </ul>
+</div>
+{% schema %}
+    {
+        "name":  "t:sections.icon-with-text.name",
+        "class": "icon-with-text-section",
+        "tag": "section",
+        "settings": [
+            {
+                "type": "header",
+                "content": "t:sections.icon-with-text.settings.title"
+            },
+            {
+                "type": "checkbox",
+                "default": true,
+                "id": "enable_full",
+                "label": "t:sections.icon-with-text.settings.enable_full"
+            },
+            {
+                "type": "color",
+                "id": "bg_color",
+                "label": "t:sections.icon-with-text.settings.bg_label"
+            },
+            {
+                "type": "header",
+                "content": "t:sections.icon-with-text.settings.padding_header"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_top_padding",
+                "label": "t:sections.icon-with-text.settings.m_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "m_bottom_padding",
+                "label": "t:sections.icon-with-text.settings.m_b_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_top_padding",
+                "label": "t:sections.icon-with-text.settings.d_t_label"
+            },
+            {
+                "type": "range",
+                "min": 0,
+                "max": 100,
+                "step": 10,
+                "unit": "px",
+                "default": 10,
+                "id": "d_bottom_padding",
+                "label": "t:sections.icon-with-text.settings.d_b_label"
+            },
+        ],
+        "blocks": [
+            {
+                "type": "icon-with-image",
+                "name": "t:sections.icon-with-text.blocks.label",
+                "settings": [
+                    {
+                        "type": "image_picker",
+                        "id": "image",
+                        "label": "t:sections.icon-with-text.blocks.icon"
+                    },
+                    {
+                        "type": "text",
+                        "id": "icon-text",
+                        "label": "t:sections.icon-with-text.blocks.text"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name": "t:sections.icon-with-text.name",
+                "category": "Image",
+            }
+        ]
+    }
+{% endschema %}
